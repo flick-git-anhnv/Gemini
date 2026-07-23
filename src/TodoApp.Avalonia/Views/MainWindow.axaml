@@ -1,0 +1,246 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:TodoApp.Avalonia.ViewModels"
+        xmlns:models="clr-namespace:TodoApp.Avalonia.Models"
+        mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="750"
+        x:Class="TodoApp.Avalonia.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        x:Name="RootWindow"
+        Title="KZTEK Todo Manager - Avalonia UI"
+        Width="1150" Height="780"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F7FA">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Header Panel (KZTEK Navy #251C53) -->
+        <Border Grid.Row="0" Background="#251C53" Padding="25,18">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <!-- Brand Icon & Title -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Spacing="15">
+                    <Border Width="42" Height="42" CornerRadius="10" Background="#3B2F75" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="✓" Foreground="#38BDF8" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="KZTEK TODO MANAGER" FontSize="20" FontWeight="Bold" Foreground="#FFFFFF" LetterSpacing="0.5"/>
+                        <TextBlock Text="Hệ thống quản lý công việc chuyên nghiệp &amp; hiện đại" FontSize="13" Foreground="#CBD5E1" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Header Stats Quick View -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="15" VerticalAlignment="Center">
+                    <Border Background="#3B2F75" CornerRadius="8" Padding="12,6">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Tổng:" Foreground="#94A3B8" FontSize="13"/>
+                            <TextBlock Text="{Binding TotalCount}" Foreground="#FFFFFF" FontSize="13" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="#1E3A8A" CornerRadius="8" Padding="12,6">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Đang làm:" Foreground="#93C5FD" FontSize="13"/>
+                            <TextBlock Text="{Binding ActiveCount}" Foreground="#60A5FA" FontSize="13" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Background="#064E3B" CornerRadius="8" Padding="12,6">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Hoàn thành:" Foreground="#A7F3D0" FontSize="13"/>
+                            <TextBlock Text="{Binding CompletedCount}" Foreground="#34D399" FontSize="13" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content Area -->
+        <ScrollViewer Grid.Row="1" Padding="25">
+            <StackPanel Spacing="20">
+
+                <!-- Task Form Card (Add / Edit Task) -->
+                <Border Background="#FFFFFF" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="20">
+                    <StackPanel Spacing="15">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Panel Grid.Column="0" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding !IsEditing}">
+                                    <Border Width="4" Height="18" Background="#251C53" CornerRadius="2"/>
+                                    <TextBlock Text="Thêm công việc mới" FontSize="16" FontWeight="Bold" Foreground="#251C53"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsEditing}">
+                                    <Border Width="4" Height="18" Background="#D97706" CornerRadius="2"/>
+                                    <TextBlock Text="Chỉnh sửa công việc" FontSize="16" FontWeight="Bold" Foreground="#D97706"/>
+                                </StackPanel>
+                            </Panel>
+
+                            <Border Grid.Column="1" IsVisible="{Binding IsEditing}" Background="#FEF3C7" CornerRadius="6" Padding="10,4">
+                                <TextBlock Text="✏️ Đang ở chế độ chỉnh sửa" Foreground="#D97706" FontSize="12" FontWeight="SemiBold"/>
+                            </Border>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="2*, 3*, 1.5*, 1.5*" RowDefinitions="Auto, Auto">
+                            <!-- Title Input -->
+                            <StackPanel Grid.Column="0" Grid.Row="0" Spacing="6" Margin="0,0,10,0">
+                                <TextBlock Text="Tiêu đề công việc (*)" FontSize="13" FontWeight="SemiBold" Foreground="#475569"/>
+                                <TextBox Text="{Binding Title, Mode=TwoWay}" Watermark="Nhập tiêu đề công việc..." Height="38" CornerRadius="6"/>
+                            </StackPanel>
+
+                            <!-- Description Input -->
+                            <StackPanel Grid.Column="1" Grid.Row="0" Spacing="6" Margin="5,0,10,0">
+                                <TextBlock Text="Mô tả / Ghi chú" FontSize="13" FontWeight="SemiBold" Foreground="#475569"/>
+                                <TextBox Text="{Binding Description, Mode=TwoWay}" Watermark="Chi tiết nội dung công việc..." Height="38" CornerRadius="6"/>
+                            </StackPanel>
+
+                            <!-- Priority Selector -->
+                            <StackPanel Grid.Column="2" Grid.Row="0" Spacing="6" Margin="5,0,10,0">
+                                <TextBlock Text="Mức độ ưu tiên" FontSize="13" FontWeight="SemiBold" Foreground="#475569"/>
+                                <ComboBox ItemsSource="{Binding PriorityLevels}" SelectedItem="{Binding Priority}" HorizontalAlignment="Stretch" Height="38" CornerRadius="6"/>
+                            </StackPanel>
+
+                            <!-- Due Date Picker -->
+                            <StackPanel Grid.Column="3" Grid.Row="0" Spacing="6" Margin="5,0,0,0">
+                                <TextBlock Text="Hạn hoàn thành" FontSize="13" FontWeight="SemiBold" Foreground="#475569"/>
+                                <DatePicker SelectedDate="{Binding DueDate}" HorizontalAlignment="Stretch" Height="38"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Form Buttons -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,5,0,0">
+                            <Button Command="{Binding CancelEditCommand}" IsVisible="{Binding IsEditing}"
+                                    Content="Hủy bỏ" Background="#94A3B8" Foreground="#FFFFFF"
+                                    Padding="18,8" CornerRadius="6" FontWeight="SemiBold"/>
+                            <Button Command="{Binding SaveCommand}"
+                                    Background="#251C53" Foreground="#FFFFFF"
+                                    Padding="22,8" CornerRadius="6" FontWeight="Bold">
+                                <Panel>
+                                    <TextBlock Text="➕ Thêm công việc" IsVisible="{Binding !IsEditing}"/>
+                                    <TextBlock Text="💾 Lưu thay đổi" IsVisible="{Binding IsEditing}"/>
+                                </Panel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Filter Bar Card -->
+                <Border Background="#FFFFFF" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="15,12">
+                    <Grid ColumnDefinitions="*, Auto, Auto">
+                        <!-- Search Box -->
+                        <TextBox Grid.Column="0" Text="{Binding SearchKeyword, Mode=TwoWay}" Margin="0,0,15,0"
+                                 Watermark="🔍 Tìm kiếm theo tiêu đề hoặc mô tả..." Height="38" CornerRadius="6"/>
+
+                        <!-- Status Filter -->
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center" Margin="0,0,15,0">
+                            <TextBlock Text="Trạng thái:" VerticalAlignment="Center" FontSize="13" Foreground="#64748B" FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding StatusFilters}" SelectedItem="{Binding SelectedStatusFilter}" Width="150" Height="38" CornerRadius="6"/>
+                        </StackPanel>
+
+                        <!-- Priority Filter -->
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <TextBlock Text="Độ ưu tiên:" VerticalAlignment="Center" FontSize="13" Foreground="#64748B" FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding PriorityFilters}" SelectedItem="{Binding SelectedPriorityFilter}" Width="150" Height="38" CornerRadius="6"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Todo List Card / DataGrid -->
+                <Border Background="#FFFFFF" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="15" MinHeight="320">
+                    <Grid RowDefinitions="Auto, *">
+                        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="5,5,5,15">
+                            <TextBlock Text="Danh sách công việc" FontSize="16" FontWeight="Bold" Foreground="#251C53" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <DataGrid Grid.Row="1" ItemsSource="{Binding TodoItems}" SelectedItem="{Binding SelectedTodo}"
+                                  AutoGenerateColumns="False" CanUserResizeColumns="True" CanUserSortColumns="True"
+                                  GridLinesVisibility="Horizontal" HeadersVisibility="Column"
+                                  Background="Transparent" BorderThickness="0" RowHeight="48">
+                            <DataGrid.Columns>
+                                <!-- Checkbox Complete Column -->
+                                <DataGridTemplateColumn Header="Trạng thái" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="models:TodoItem">
+                                            <CheckBox IsChecked="{Binding IsCompleted, Mode=OneWay}"
+                                                      Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ToggleCompleteCommand}"
+                                                      CommandParameter="{Binding}"
+                                                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Title Column -->
+                                <DataGridTemplateColumn Header="Tiêu đề" Width="2.5*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="models:TodoItem">
+                                            <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Margin="10,0"
+                                                       FontWeight="SemiBold" Foreground="#1E293B"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Description Column -->
+                                <DataGridTemplateColumn Header="Mô tả" Width="3*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="models:TodoItem">
+                                            <TextBlock Text="{Binding Description}" VerticalAlignment="Center" Margin="10,0"
+                                                       Foreground="#64748B" TextTrimming="CharacterEllipsis"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Priority Column -->
+                                <DataGridTemplateColumn Header="Độ ưu tiên" Width="120">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="models:TodoItem">
+                                            <Border CornerRadius="12" Padding="10,4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0" Background="#F1F5F9">
+                                                <TextBlock Text="{Binding Priority}" FontWeight="SemiBold" FontSize="12" Foreground="#334155" HorizontalAlignment="Center"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Due Date Column -->
+                                <DataGridTemplateColumn Header="Hạn hoàn thành" Width="1.5*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="models:TodoItem">
+                                            <TextBlock Text="{Binding DueDate, StringFormat='{}{0:dd/MM/yyyy}'}"
+                                                       VerticalAlignment="Center" Margin="10,0" Foreground="#475569"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Action Buttons Column -->
+                                <DataGridTemplateColumn Header="Thao tác" Width="140">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="models:TodoItem">
+                                            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Button Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).EditCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Content="Sửa" Background="#0284C7" Foreground="#FFFFFF"
+                                                        Padding="10,4" CornerRadius="4" FontSize="12" FontWeight="SemiBold"/>
+                                                <Button Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).DeleteCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Content="Xóa" Background="#EF4444" Foreground="#FFFFFF"
+                                                        Padding="10,4" CornerRadius="4" FontSize="12" FontWeight="SemiBold"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+
+                <!-- Footer Status Strip -->
+                <Border Background="#FFFFFF" CornerRadius="10" BorderBrush="#E2E8F0" BorderThickness="1" Padding="15,10">
+                    <Grid ColumnDefinitions="*, Auto">
+                        <TextBlock Grid.Column="0" Text="{Binding StatsSummary}" Foreground="#64748B" FontSize="13" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="KZTEK Avalonia Migration 2026" Foreground="#94A3B8" FontSize="12" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+
+</Window>
