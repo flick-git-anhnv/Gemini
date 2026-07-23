@@ -56,6 +56,7 @@ Workspace điều phối AI agents cho KZTEK — Multi-Agent Orchestration Frame
 
 | Module | Path | Mục đích | Files quan trọng |
 |--------|------|----------|-----------------|
+| TodoApp (C# WinForms) | `src/TodoApp/` | Ứng dụng Quản lý công việc (Todo) C# Windows Forms | `Program.cs`, `Form1.cs`, `Models/TodoItem.cs`, `Services/TodoService.cs` |
 | Agent Definitions | `.gemini/agents/` | Định nghĩa vai trò, model, tools, quy trình cho mỗi agent | `task-planner.md`, `senior-developer.md`, `qa-engineer.md`, `tech-lead.md`, ... |
 | Skills/Commands | `.gemini/commands/` | Các skill có thể gọi qua slash command | `ship.md`, `verify-pr.md`, `scope-check.md`, `security-audit-stride.md` |
 | Eval Files | `.gemini/evals/` | Capability Eval theo EDD cho từng agent | `task-planner.md`, `senior-developer.md`, `qa-engineer.md` |
@@ -164,6 +165,7 @@ Workspace điều phối AI agents cho KZTEK — Multi-Agent Orchestration Frame
 
 | Ngày | File/Module | Loại | Mô tả ngắn | Agent |
 |------|------------|------|------------|-------|
+| 2026-07-23 | `src/TodoApp/` | Add | Xây dựng ứng dụng TodoApp C# Windows Forms (.NET 10) | senior-developer |
 | 2026-07-12 | `.gemini/evals/` | Add | Tạo thư mục + 3 eval mẫu (task-planner, senior-developer, qa-engineer) | senior-developer |
 | 2026-07-12 | `code-graph/CODE-GRAPH.md` | Add | Tạo bản đồ codebase ban đầu cho workspace | senior-developer |
 
