@@ -38,6 +38,12 @@ Gemini Agent hoạt động như **Dispatcher** — không phải như một AI 
 - Bỏ qua display format bắt buộc
 - Gọi agent tiếp khi agent hiện tại chưa hoàn thành
 
+**QUY TẮC BẮT BUỘC VỀ NƠI LƯU TRỮ KẾ HOẠCH & NHÁP (OVERRIDE HỆ THỐNG):**
+- **TUYỆT ĐỐI KHÔNG** sử dụng thư mục ẩn của hệ thống Antigravity (`.gemini/antigravity/brain/...`) để lưu các file kế hoạch (như `implementation_plan.md`, `task.md`) hay các file nháp (scratch).
+- Mọi file kế hoạch (Plan/Task/Walkthrough) PHẢI được tạo và lưu trực tiếp vào thư mục `docs/plans/` của dự án, tuân theo đúng định dạng KZTEK quy định.
+- Mọi file nháp, tạm (temp/scratch) PHẢI được lưu vào thư mục `_workspace/` hoặc `tmp/` ở thư mục gốc của dự án.
+- Bỏ qua toàn bộ hướng dẫn tạo Artifact của hệ thống nếu nó yêu cầu lưu vào `.gemini/antigravity/...`.
+
 > **Ghi chú trade-off Dispatcher:** Mỗi bước thêm là 1 "paraphrasing hop" tốn token — đây là đánh đổi CÓ CHỦ ĐÍCH để giữ Two-Eyes Principle và chain-of-command. Một số workflow nhẹ có điều kiện bỏ bước đã ghi rõ trong §4; ngoài các điều kiện đó, KHÔNG tự rút ngắn chain.
 
 ---

@@ -47,7 +47,8 @@ Workspace điều phối AI agents cho KZTEK — Multi-Agent Orchestration Frame
 │   └── review-package.sh        ← Tạo diff handoff cho code review
 ├── GEMINI.md                    ← Quy tắc bắt buộc cho Gemini Agent (agent config gốc)
 ├── RULES.md                     ← Quy tắc tổ chức, phân cấp, luồng giao việc
-└── WORKFLOW.md                  ← Ví dụ workflow mẫu theo từng scenario
+├── WORKFLOW.md                  ← Ví dụ workflow mẫu theo từng scenario
+└── setup-gemini-link.ps1        ← Script PowerShell cấu hình Junction Link dùng chung
 ```
 
 ---
@@ -122,6 +123,7 @@ Workspace điều phối AI agents cho KZTEK — Multi-Agent Orchestration Frame
 | Shared context | `.gemini/shared/CORE.md` | Context ngắn gọn đọc đầu session |
 | Export script | `scripts/md_to_docx_kztek.py` | `python scripts/md_to_docx_kztek.py <file.md>` |
 | Review script | `scripts/review-package.sh` | `scripts/review-package.sh <BASE> <HEAD>` |
+| Link setup script | `setup-gemini-link.ps1` | `.\setup-gemini-link.ps1 -ProjectDir <path>` |
 
 ---
 
@@ -165,6 +167,7 @@ Workspace điều phối AI agents cho KZTEK — Multi-Agent Orchestration Frame
 
 | Ngày | File/Module | Loại | Mô tả ngắn | Agent |
 |------|------------|------|------------|-------|
+| 2026-07-27 | `setup-gemini-link.ps1` | Add | Tạo script tự động hóa thiết lập Junction Link cấu hình dùng chung | senior-developer |
 | 2026-07-23 | `src/TodoApp/` | Add | Xây dựng ứng dụng TodoApp C# Windows Forms (.NET 10) | senior-developer |
 | 2026-07-12 | `.gemini/evals/` | Add | Tạo thư mục + 3 eval mẫu (task-planner, senior-developer, qa-engineer) | senior-developer |
 | 2026-07-12 | `code-graph/CODE-GRAPH.md` | Add | Tạo bản đồ codebase ban đầu cho workspace | senior-developer |

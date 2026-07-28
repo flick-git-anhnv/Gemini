@@ -21,3 +21,18 @@ Thumbs.db
 # Workspace scratchpad (artifact trung gian, không commit — §11.0 CLAUDE.md)
 _workspace/
 _workspace_*/
+
+# Gemini Global State and Cache
+.gemini/settings.json
+.gemini/backups/
+.gemini/cache/
+.gemini/downloads/
+.gemini/file-history/
+.gemini/ide/
+.gemini/plugins/
+.gemini/projects/
+.gemini/session-env/
+.gemini/sessions/
+.gemini/shell-snapshots/
+.gemini/telemetry/
+.gemini/antigravity/
