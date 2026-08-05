@@ -1,57 +1,20 @@
 {
-  "//": "MẪU cho ~/.claude/settings.json — KHÔNG copy đè, phải MERGE vào file đang có.",
-  "//_huong_dan": [
-    "File này chỉ chứa phần config KZTEK cần có ở user-level scope.",
-    "Trên máy mới: chạy scripts/link-global.ps1 trước, rồi merge 3 mục dưới đây",
-    "vào C:/Users/<user>/.claude/settings.json — giữ nguyên mọi mục sẵn có của máy",
-    "(model, theme, enabledPlugins, hook riêng của máy không thuộc KZTEK, ...).",
-    "Chi tiết: docs/SETUP-GLOBAL.md"
+  "//": "CẢNH BÁO (2026-08-05): bản cũ của file này copy nguyên schema settings.json của Claude Code (permissions.allow với Bash(...)/PowerShell(...), hooks.PreToolUse) — Antigravity KHÔNG đọc schema đó, nên gần như vô tác dụng. Nội dung dưới đây là schema THẬT của Antigravity (VS Code-based). Xem docs/research/RESEARCH-antigravity-permissions-2026-08-05.md nếu có.",
+  "//_vi_tri_thuc_te": [
+    "File này KHÔNG merge vào ~/.gemini/settings.json (đó là config của Gemini CLI, khác Antigravity IDE).",
+    "Mở đúng chỗ: trong Antigravity, Ctrl+Shift+P -> 'Preferences: Open User Settings (JSON)'.",
+    "Merge 5 khoá dưới đây vào file JSON đó — giữ nguyên mọi khoá khác đã có sẵn."
   ],
-  "permissions": {
-    "allow": [
-      "Bash(npm *)",
-      "Bash(npx *)",
-      "Bash(git *)",
-      "Bash(python *)",
-      "Bash(pip *)",
-      "Bash(node *)",
-      "Glob",
-      "Grep",
-      "Read",
-      "WebSearch",
-      "WebFetch",
-      "Edit",
-      "Write"
-    ]
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"C:/Users/nguye/.claude/hooks-kztek/config-protection.js\"",
-            "shell": "bash",
-            "timeout": 10,
-            "statusMessage": "Kiểm tra config-protection..."
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"C:/Users/nguye/.claude/hooks-kztek/code-graph-lesson-reminder.js\"",
-            "shell": "bash",
-            "timeout": 10,
-            "statusMessage": "Kiểm tra code-graph / lesson reminder..."
-          }
-        ]
-      }
-    ]
-  }
+  "//_con_thieu_khong_the_bu_bang_settings_json": [
+    "Terminal Auto Execution -> 'Always Proceed' và Browser Javascript Execution -> 'Always Proceed'",
+    "chỉ đổi được qua UI Settings -> Agent/Permissions, KHÔNG có khoá JSON tương đương — phải bật tay 1 lần.",
+    "config-protection.js (hooks.PreToolUse của Claude Code) KHÔNG có cơ chế tương đương trong Antigravity",
+    "tại thời điểm 2026-08 — Antigravity không hỗ trợ hook chặn Edit/Write như Claude Code.",
+    "Google chưa có 'YOLO mode' chính thức; một số action vẫn có thể bị hỏi lại do bug đã biết."
+  ],
+  "chat.tools.autoApprove": true,
+  "chat.agent.autoApprove": true,
+  "chat.agent.maxRequests": 999,
+  "security.workspace.trust.enabled": false,
+  "terminal.integrated.confirmOnKill": "never"
 }

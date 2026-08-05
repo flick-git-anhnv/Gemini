@@ -24,8 +24,12 @@ cd C:\Path\To\GeminiGit
 
 Script này sẽ tự động tạo các **Junction Links** cho các thư mục cấu hình bên trong `C:\Users\<Tên-Bạn>\.gemini`. Nhờ vậy, thư mục gốc của hệ thống AI sẽ luôn đồng bộ 100% với kho chứa này mà không làm khoá (lock) các file dữ liệu cục bộ.
 
-### Bước 3: Cấu hình Permissions (Tùy chọn)
-Nếu bạn chưa có file `settings.json`, hãy sao chép (copy) file mẫu từ `templates\settings-global.json` vào `C:\Users\<Tên-Bạn>\.gemini\settings.json` để cấp quyền chạy các lệnh thông dụng (như PowerShell, Git, Node, Python) mà không bị hệ thống AI hỏi xác nhận quá nhiều.
+### Bước 3: Giảm số lần Antigravity hỏi xác nhận (Tùy chọn)
+`templates\settings-global.json` **không** merge vào `~/.gemini/settings.json` (đó là config của Gemini CLI, khác Antigravity IDE). Làm đúng theo 2 phần:
+1. Trong Antigravity: `Ctrl+Shift+P` → *Preferences: Open User Settings (JSON)* → merge 5 khoá trong `templates\settings-global.json` vào đó (`chat.tools.autoApprove`, `chat.agent.autoApprove`, `chat.agent.maxRequests`, `security.workspace.trust.enabled`, `terminal.integrated.confirmOnKill`).
+2. Trong UI Settings → Agent/Permissions: đổi **Terminal Auto Execution** và **Browser Javascript Execution** từ "Request Review" → "Always Proceed" (không có khoá JSON tương đương, phải bật tay).
+
+> Google chưa có "YOLO mode" chính thức cho Antigravity (2026-08) — vẫn có thể bị hỏi lại ở vài action do bug đã biết, không phải do cấu hình sai.
 
 ---
 
