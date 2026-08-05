@@ -17,8 +17,8 @@ CTO (L1)
 ├── Product Manager (L2) → Business Analyst (L4)
 ├── Engineering Manager (L2)
 │   ├── Tech Lead (L3) → Senior Dev (L4) → Junior Dev (L5)
-│   │   ├── Code Migrator (L4, Gemini Pro khi lập plan) ← CHỈ khi user yêu cầu migrate code
-│   │   └── GitHub Repo Researcher (L4, Gemini Flash) ← CHỈ khi user gửi link GitHub nghiên cứu
+│   │   ├── Code Migrator (L4, Opus khi lập plan) ← CHỈ khi user yêu cầu migrate code
+│   │   └── GitHub Repo Researcher (L4, Sonnet) ← CHỈ khi user gửi link GitHub nghiên cứu
 │   ├── QA Lead (L3) → QA Engineer (L5)
 │   │   └── UX/UI Reviewer (L5) ← gọi khi code vừa đổi/thêm giao diện
 │   ├── DevOps Lead (L3) → DevOps Engineer (L5)
@@ -50,7 +50,7 @@ CTO (L1)
 | Tài liệu | WF-DOCS | PM→DOC-WRITER — CHỈ khi user yêu cầu |
 | Convert .md | WF-CONVERT | DOC-WRITER — CHỈ khi user yêu cầu |
 | Typo/UI nhỏ P3 | WF-FASTTRACK | JD→TL→[UXR nếu đổi UI]→QAE→DOE |
-| Migrate framework/ngôn ngữ | WF-MIGRATE | CODE-MIGRATOR (plan, Gemini Pro)→SD/JD (code, Gemini Flash)→CODE-MIGRATOR (review)→QAE — CHỈ khi user yêu cầu |
+| Migrate framework/ngôn ngữ | WF-MIGRATE | CODE-MIGRATOR (plan, Opus)→SD/JD (code, Sonnet)→CODE-MIGRATOR (review)→QAE — CHỈ khi user yêu cầu |
 | Nghiên cứu repo GitHub (user gửi link) — cải tiến KZTEK hoặc học tập/tham khảo | WF-GITHUB-RESEARCH | GITHUB-REPO-RESEARCHER (Phase 0→nhánh→clone→**phân tích repo**)→hỏi mục đích→**Mode A** (đề xuất riêng→user duyệt→áp dụng→user xác nhận merge→main) HOẶC **Mode B** (giải thích nguyên lý/áp dụng tương tác đến khi user nắm rõ→tài liệu tổng hợp→merge) — CHỈ khi user gửi link |
 
 `[UXR nếu đổi UI]` = chèn bước UX/UI REVIEWER (chạy app, chụp screenshot, đánh giá C1–C7) khi code vừa sửa/thêm giao diện. Bỏ qua nếu thay đổi chỉ ở backend/logic.
@@ -68,7 +68,7 @@ Pre-0 → Glob docs/plans/PLAN-*.md (cũ) VÀ docs/plans/PLAN-*/PLAN-MASTER.md (
 
 Bước 0 → Dispatcher hiển thị phân tích (xem format §5)
 Bước N → Mỗi bước ⬜/🔄 trong plan chạy TÁCH biệt session chính (xem §16.5 GEMINI.md):
-         LOCAL → invoke_subagent tool | WEB → RemoteTrigger
+         LOCAL → invoke_subagent tool (subagent) | WEB → RemoteTrigger
          → agent/trigger tự commit+push+cập nhật step file (chi tiết) + PLAN-MASTER.md (1 dòng status), trả tóm tắt ngắn về session chính
 Cuối   → Dispatcher tổng kết + phân tích tái sử dụng (§18 GEMINI.md)
 ```
@@ -111,9 +111,11 @@ Trạng thái: ✅/⚠️/🔴 | Artifacts: [...] | Tiếp theo: [...]
 
 ## 6. Rules cứng (không ngoại lệ)
 
+> **Tra GOTCHAS.md:** Trước khi debug lỗi lạ, lọc theo **Category** ở đầu GOTCHAS.md (`[SCRIPT]`, `[ENCODING]`, `[UI-BINDING]`, `[CONFIG]`...) → chỉ đọc entries thuộc category đó. Không cần đọc toàn bộ file.
+
 | # | Rule |
 |---|------|
-| R1 | Mọi `.md` tạo/sửa → chạy `python scripts/md_to_docx_kztek.py <file>` ngay |
+| R1 | Mọi `.md` tạo/sửa → chạy `python C:/Users/nguye/.gemini/scripts/md_to_docx_kztek.py <file>` ngay |
 | R2 | Coding agent → đọc `code-graph/CODE-GRAPH.md` TRƯỚC source files |
 | R3 | Thay đổi code → cập nhật `CODE-GRAPH.md` + xuất `CODE-GRAPH.pdf` cùng session |
 | R4 | Không self-merge, không self-approve bất kỳ artifact nào |
@@ -165,19 +167,17 @@ Trạng thái: ✅/⚠️/🔴 | Artifacts: [...] | Tiếp theo: [...]
 
 | Agent | Model |
 |---|---|
-| CTO, Tech Lead | `gemini-3.6-pro` |
-| Code Migrator | `gemini-3.6-pro` — CHỈ dùng khi lập plan/khảo sát/review (G1,G2,G5-review); code thực tế giao Gemini Flash-agent |
-| GitHub Repo Researcher | `gemini-3.6-flash` — CHỈ hoạt động khi user gửi link GitHub |
-| Tất cả còn lại | `gemini-3.6-flash` |
-| Task cơ học có template (smoke-test log, deploy checklist, MD→DOCX, CRUD lặp lại đã có pattern) | `gemini-3.6-flash-lite` — downshift theo §13.1b GEMINI.md; KHÔNG áp dụng cho bước review/approve |
+| CTO, Tech Lead, Code Migrator (chỉ khi khảo sát/lập plan/review migrate) | `gemini-3.6-pro` |
+| Toàn bộ agent còn lại (PM, BA, EM, Senior/Junior Dev, QA Lead/Engineer, DevOps Lead/Engineer, UI/UX Designer, UX/UI Reviewer, Project Manager, Documentation Writer, GitHub Repo Researcher, md-optimizer, task-planner) | `gemini-3.6-flash` |
+| Task cơ học có template rõ (§13.1b GEMINI.md — downshift theo BƯỚC, không đổi model mặc định của agent) | `gemini-3.6-flash-lite` |
 
-Không tự nâng model — escalate lên agent cấp cao hơn. Downshift xuống Gemini Flash-Lite là tự quyết theo bảng trên, không cần hỏi user; task đầu tiên của 1 pattern mới vẫn dùng model mặc định.
+Không tự nâng model — escalate lên agent cấp cao hơn khi task vượt thẩm quyền. TUYỆT ĐỐI không downshift Haiku cho bước REVIEW / APPROVE / SIGN-OFF (Two-Eyes §8).
 
 ---
 
 ## 7b. Song song hoá (Parallel Execution)
 
-Khi 2 bước trong 1 workflow ĐỘC LẬP nhau (cùng nhận input từ 1 bước trước, không bên nào review/approve bên kia) → được phép gọi nhiều subagent trong CÙNG 1 lời gọi invoke_subagent thay vì tuần tự. Ký hiệu `∥` trong bảng workflow (`GEMINI.md` §4). Điều kiện đầy đủ: `RULES.md` §3.4. TUYỆT ĐỐI KHÔNG song song hoá cặp bước có quan hệ review/approve (vi phạm Two-Eyes).
+Khi 2 bước trong 1 workflow ĐỘC LẬP nhau (cùng nhận input từ 1 bước trước, không bên nào review/approve bên kia) → được phép gọi nhiều subagent trong CÙNG 1 lời gọi invoke_subagent tool thay vì tuần tự. Ký hiệu `∥` trong bảng workflow (`GEMINI.md` §4). Điều kiện đầy đủ: `RULES.md` §3.4. TUYỆT ĐỐI KHÔNG song song hoá cặp bước có quan hệ review/approve (vi phạm Two-Eyes).
 
 ---
 
@@ -194,5 +194,5 @@ Khi 2 bước trong 1 workflow ĐỘC LẬP nhau (cùng nhận input từ 1 bư�
 ---
 
 > Chi tiết đầy đủ: `GEMINI.md` (tài liệu gốc)
-> Agent definitions: `.gemini/agents/[name].md`
+> Agent definitions: `C:/Users/nguye/.gemini/agents/[name].md`
 > Workflow details: `GEMINI.md` §4

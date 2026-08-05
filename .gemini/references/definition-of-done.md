@@ -12,7 +12,7 @@
 ## 2. Quality
 - [ ] Test có ý nghĩa (không chỉ viết để đạt coverage) — unit + integration cho logic mới.
 - [ ] Code review đã qua đúng chain (Two-Eyes §8 GEMINI.md) — không self-merge, không self-approve.
-- [ ] Security audit đã chạy nếu đụng auth/payment/DB schema/dữ liệu nhạy cảm (`security-audit-stride`, xem `.gemini/references/security-audit-checklist.md`).
+- [ ] Security audit đã chạy nếu đụng auth/payment/DB schema/dữ liệu nhạy cảm (`security-audit-stride`, xem `C:/Users/nguye/.gemini/references/security-audit-checklist.md`).
 - [ ] Không còn P0/P1 bug mở liên quan đến task này (QA có quyền VETO — §8, §9 GEMINI.md).
 
 ## 3. Integration

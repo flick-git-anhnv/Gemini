@@ -99,4 +99,4 @@ với PowerShell 7 (`pwsh`) nơi `UTF8` mặc định KHÔNG có BOM (phải dù
 ## Tham chiếu
 
 - Project liên quan: iPGSv4 — `scripts/windows-tools/KioskDeployTool.ps1`
-- Repro tối thiểu lưu tại: `C:\Users\nguye\AppData\Local\Temp\gemini\...\scratchpad` (tạm thời, không commit)
+- Repro tối thiểu lưu tại: `C:\Users\nguye\AppData\Local\Temp\claude\...\scratchpad` (tạm thời, không commit)

@@ -6,7 +6,7 @@ description: "PHẢI dùng khi: vừa sửa agent/skill/template/script dùng ch
 
 ## Vấn đề skill này giải quyết
 
-Config dùng chung nằm ở repo `Desktop\Gemini-Git\gemini`, được junction vào `~/.gemini`.
+Config dùng chung nằm ở repo `Desktop\Gemini-Git\claude`, được junction vào `~/.claude`.
 Khi bạn đang làm ở **project B** và sửa `~/.gemini/agents/cto.md`, file thật thuộc **repo config** —
 `git status` trong project B **không thấy gì**. Thay đổi dễ nằm chờ rồi bị quên.
 
@@ -15,7 +15,7 @@ Skill này commit + push đúng repo, chạy được từ bất kỳ thư mục
 ## Biến
 
 ```
-REPO = C:/Users/nguye/Desktop/Gemini-Git/gemini
+REPO = C:/Users/nguye/Desktop/Gemini-Git/claude
 ```
 
 Mọi lệnh git dùng `git -C "$REPO"` — KHÔNG `cd`, để không phá working directory của session hiện tại.

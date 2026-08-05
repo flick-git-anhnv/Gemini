@@ -92,4 +92,4 @@ ASSUMPTIONS I'M MAKING:
 
 ## Artifact bắt buộc
 `docs/tech-design/TDD-[feature-slug].md` — TDD + task breakdown + API contract nhúng trong.
-Template: `.gemini/templates/TDD-template.md`
+Template: `C:/Users/nguye/.gemini/templates/TDD-template.md`

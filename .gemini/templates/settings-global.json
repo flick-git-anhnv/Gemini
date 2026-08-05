@@ -1,10 +1,10 @@
 {
-  "//": "MẪU cho ~/.gemini/settings.json — KHÔNG copy đè, phải MERGE vào file đang có.",
+  "//": "MẪU cho ~/.claude/settings.json — KHÔNG copy đè, phải MERGE vào file đang có.",
   "//_huong_dan": [
     "File này chỉ chứa phần config KZTEK cần có ở user-level scope.",
-    "Trên máy mới: chạy scripts/link-global.ps1 trước, rồi merge 2 mục dưới đây",
-    "vào C:/Users/<user>/.gemini/settings.json — giữ nguyên mọi mục sẵn có của máy",
-    "(model, theme, enabledPlugins, hooks.PostToolUse riêng của máy, ...).",
+    "Trên máy mới: chạy scripts/link-global.ps1 trước, rồi merge 3 mục dưới đây",
+    "vào C:/Users/<user>/.claude/settings.json — giữ nguyên mọi mục sẵn có của máy",
+    "(model, theme, enabledPlugins, hook riêng của máy không thuộc KZTEK, ...).",
     "Chi tiết: docs/SETUP-GLOBAL.md"
   ],
   "permissions": {
@@ -21,71 +21,7 @@
       "WebSearch",
       "WebFetch",
       "Edit",
-      "Write",
-      "PowerShell(New-Item *)",
-      "PowerShell(Set-Content *)",
-      "PowerShell(Out-File *)",
-      "PowerShell(Add-Content *)",
-      "PowerShell(Get-Content *)",
-      "PowerShell(Copy-Item *)",
-      "PowerShell(Move-Item *)",
-      "PowerShell(Rename-Item *)",
-      "PowerShell(Invoke-Item *)",
-      "PowerShell(mkdir *)",
-      "PowerShell(md *)",
-      "PowerShell(notepad *)",
-      "PowerShell(explorer *)",
-      "PowerShell(Start-Process notepad *)",
-      "PowerShell(Start-Process explorer *)",
-      "PowerShell(type *)",
-      "PowerShell(copy *)",
-      "PowerShell(move *)",
-      "PowerShell(dir *)",
-      "PowerShell(ls *)",
-      "PowerShell(cat *)",
-      "PowerShell(echo *)",
-      "PowerShell(Write-Output *)",
-      "PowerShell(Write-Host *)",
-      "PowerShell(Get-ChildItem *)",
-      "Bash(type *)",
-      "Bash(copy *)",
-      "Bash(move *)",
-      "Bash(mkdir *)",
-      "Bash(dir *)",
-      "Bash(echo *)",
-      "Bash(notepad *)",
-      "Bash(explorer *)",
-      "Bash(start *)",
-      "Bash(cp *)",
-      "Bash(mv *)",
-      "Bash(touch *)",
-      "Bash(ls *)",
-      "Bash(cat *)",
-      "Bash(dotnet build *)",
-      "Bash(dotnet run *)",
-      "Bash(ping -n 4 127.0.0.1)",
-      "Bash(powershell -Command ' *)",
-      "Read(//tmp/**)",
-      "Bash(cat)",
-      "Bash(Start-Process dotnet *)",
-      "Bash(Select-Object -ExpandProperty Id)",
-      "Bash(awk '{print $2, $11}')",
-      "Read(//c/Users/nguye/AppData/Local/Temp/**)",
-      "PowerShell(dotnet *)",
-      "Bash(dotnet *)",
-      "PowerShell(docker *)",
-      "Bash(docker *)",
-      "PowerShell(docker-compose *)",
-      "Bash(docker-compose *)",
-      "PowerShell(Invoke-WebRequest *)",
-      "PowerShell(Invoke-RestMethod *)",
-      "PowerShell(Test-NetConnection *)",
-      "Bash(curl *)",
-      "Bash(psql *)",
-      "Bash(mysql *)",
-      "Bash(sqlite3 *)",
-      "PowerShell(choco *)",
-      "PowerShell(winget *)"
+      "Write"
     ]
   },
   "hooks": {
@@ -95,10 +31,24 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"C:/Users/nguye/.gemini/hooks-kztek/config-protection.js\"",
+            "command": "node \"C:/Users/nguye/.claude/hooks-kztek/config-protection.js\"",
             "shell": "bash",
             "timeout": 10,
             "statusMessage": "Kiểm tra config-protection..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/Users/nguye/.claude/hooks-kztek/code-graph-lesson-reminder.js\"",
+            "shell": "bash",
+            "timeout": 10,
+            "statusMessage": "Kiểm tra code-graph / lesson reminder..."
           }
         ]
       }

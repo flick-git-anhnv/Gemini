@@ -48,7 +48,7 @@ Skill `run-plan-step` thực thi MỘT bước (STEP-N.M) trong plan `docs/plans
 **Output mong đợi:**
 - [ ] Đọc PLAN-MASTER, xác định đúng STEP-4.1 và agent phụ trách theo cột Agent
 - [ ] Prompt dựng ra chứa NGUYÊN VĂN Handoff Log của STEP-3.3 + đủ 8 phần khuôn (nhiệm vụ từ step file, build/test gate, cập nhật step file + MASTER + DOCX MASTER, commit format `[slug] Bước N.M: ...`, giới hạn scope, KHÔNG push nếu môi trường không có credential)
-- [ ] Gọi Agent tool với subagent_type đúng mapping (VD "Senior Developer" → `senior-developer`)
+- [ ] Gọi invoke_subagent tool với subagent_type đúng mapping (VD "Senior Developer" → `senior-developer`)
 
 **Grader:** Human (đọc prompt dựng ra, đối chiếu checklist 8 phần)
 

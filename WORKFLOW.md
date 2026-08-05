@@ -310,7 +310,7 @@ sequenceDiagram
 
     U->>Disp: "Chuyển WinForms → Avalonia, chạy được Windows + Linux"
     Disp->>Disp: Yêu cầu rõ ràng migrate framework → kích hoạt WF-MIGRATE
-    Disp->>CM: Giao task (Gemini Pro)
+    Disp->>CM: Giao task (Opus)
 
     CM->>CM: Lessons Check (avalonia/ + csharp-winforms/ + dotnet-general/)
     CM->>CM: Cấp 0 — Glob/Grep đếm N file nguồn, M control/timer/event
@@ -321,8 +321,8 @@ sequenceDiagram
     CM->>U: Trình plan + inventory + mapping — xin duyệt
     U->>CM: Duyệt plan
 
-    CM->>SD: Giao task UI/logic phức tạp (Gemini Flash)
-    CM->>JD: Giao task CRUD/UI đơn giản (Gemini Flash)
+    CM->>SD: Giao task UI/logic phức tạp (Sonnet)
+    CM->>JD: Giao task CRUD/UI đơn giản (Sonnet)
     SD->>CM: Nộp artifact + build sạch (win-x64 + linux-x64)
     JD->>CM: Nộp artifact + build sạch
 
@@ -335,7 +335,7 @@ sequenceDiagram
 ```
 
 **Bài học từ ví dụ này:**
-- Code Migrator KHÔNG tự code hàng loạt — chỉ khảo sát/lập plan/review (Gemini Pro), giao việc code thực tế cho Senior/Junior Dev (Gemini Flash).
+- Code Migrator KHÔNG tự code hàng loạt — chỉ khảo sát/lập plan/review (Opus), giao việc code thực tế cho Senior/Junior Dev (Sonnet).
 - Inventory PHẢI khớp số đếm thực tế (Cấp 0) — không liệt kê mẫu, tránh bỏ sót tính năng.
 - Dependency PHẢI được rà lại lần cuối ở G6 (không chỉ 1 lần ở đầu) — bắt các package Senior/Junior Dev thêm giữa đường.
 - Workflow này KHÔNG tự động kích hoạt — chỉ khi user yêu cầu rõ ràng chuyển đổi framework/ngôn ngữ.
@@ -356,7 +356,7 @@ sequenceDiagram
 
     TL->>Disp: Code đã merge — có đổi UI + logic
     Disp->>Disp: Kiểm tra điều kiện RULES.md §3.4 — QA & UXR độc lập, cùng nhận input từ TL
-    par Chạy song song (1 lời gọi invoke_subagent)
+    par Chạy song song (1 lời gọi invoke_subagent tool)
         Disp->>QA: Test chức năng (functional)
         QA->>QA: Manual + automation test
     and
@@ -389,7 +389,7 @@ sequenceDiagram
 
     U->>Disp: Gửi link GitHub + yêu cầu nghiên cứu
     Disp->>Disp: Có link GitHub → kích hoạt WF-GITHUB-RESEARCH
-    Disp->>GRR: Giao task (Gemini Flash)
+    Disp->>GRR: Giao task (Sonnet)
 
     GRR->>GRR: Bước 0 — Phase 0 Audit (kiểm tra nhánh/plan/artifact đã có chưa)
     GRR->>GRR: Bước 1 — Tạo nhánh research/<repo-slug>-<date>
@@ -429,7 +429,7 @@ sequenceDiagram
 
     U->>Disp: Gửi link GitHub + yêu cầu "học tập/tìm hiểu"
     Disp->>Disp: Có link GitHub, mục đích học tập → kích hoạt WF-GITHUB-RESEARCH (Mode B)
-    Disp->>GRR: Giao task (Gemini Flash)
+    Disp->>GRR: Giao task (Sonnet)
 
     GRR->>GRR: Bước 0 — Phase 0 Audit
     GRR->>GRR: Bước 1 — Tạo nhánh research/<repo-slug>-<date>, xác định Mode B (user đã nói rõ mục đích học tập)
@@ -468,6 +468,6 @@ sequenceDiagram
 | 7 | Tài liệu hóa quyết định | Mọi quyết định lớn |
 | 8 | Khách hàng là trung tâm | Khi có tranh cãi nội bộ |
 | 9 | UX/UI Reviewer bắt buộc khi đổi giao diện | Trước QA sign-off, nếu code sửa/thêm UI (feature, bugfix, hotfix, fast-track, refactor) |
-| 10 | Code Migrator chỉ dùng khi được yêu cầu | Không tự động chạy trong bất kỳ workflow nào khác; Gemini Pro chỉ dùng ở giai đoạn lập plan/review |
+| 10 | Code Migrator chỉ dùng khi được yêu cầu | Không tự động chạy trong bất kỳ workflow nào khác; Opus chỉ dùng ở giai đoạn lập plan/review |
 | 11 | Song song hoá khi 2 bước độc lập, không quan hệ review | Tăng tốc workflow, không giảm chất lượng kiểm tra (xem `RULES.md` §3.4, ký hiệu `∥` trong `GEMINI.md` §4) |
 | 12 | GitHub Repo Researcher chỉ dùng khi user gửi link GitHub | Không tự động chạy trong workflow khác; hỗ trợ cả 2 mục đích (Mode A cải tiến KZTEK, Mode B học tập/tham khảo); không tự áp dụng đề xuất/chốt tài liệu hay tự merge khi chưa có xác nhận rõ ràng của user |

@@ -4,7 +4,7 @@ tags: [powershell, encoding, bom, utf-8, tieng-viet, parser-error]
 severity: high
 created: 2026-07-25
 updated: 2026-07-25
-project-origin: gemini (repo config KZTEK)
+project-origin: claude (repo config KZTEK)
 ---
 
 # PowerShell 5.1 đọc `.ps1` không BOM theo ANSI → chữ Việt làm parser báo lỗi sai hướng
@@ -12,7 +12,7 @@ project-origin: gemini (repo config KZTEK)
 ## Tình huống gặp phải
 
 Viết `scripts/link-global.ps1` (script tạo junction đưa config KZTEK lên user-level scope).
-File được tạo bằng tool `Write` của Gemini Code → UTF-8 **không có BOM**.
+File được tạo bằng tool `Write` của Gemini Agent → UTF-8 **không có BOM**.
 Trong script có dùng chữ Việt ở cả comment, chuỗi hiển thị, **và key hashtable**:
 
 ```powershell
@@ -125,5 +125,5 @@ không liên quan và không thay thế được BOM/`-f 65001`.
 ## Tham chiếu
 
 - Gotcha tương ứng trong repo: `.gemini/shared/GOTCHAS.md` → G002
-- Project liên quan: repo config KZTEK (`Desktop\Gemini-Git\gemini`)
+- Project liên quan: repo config KZTEK (`Desktop\Gemini-Git\claude`)
 - Xem thêm: `docs/SETUP-GLOBAL.md` (bối cảnh vì sao cần script này)

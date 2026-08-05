@@ -2,7 +2,7 @@
 # build-deb.sh — Đóng gói IPGS.Kiosk.Avalonia thành file .deb cho Linux (Debian/Ubuntu).
 #
 # Sinh bởi /gen-build-deb, viết theo spec đúc kết từ ParkingV8 (KHÔNG có sẵn template
-# ParkingV8 để copy 1:1 trong repo này — xem .gemini/commands/gen-build-deb.md).
+# ParkingV8 để copy 1:1 trong repo này — xem .claude/commands/gen-build-deb.md).
 #
 # Chạy: bash scripts/linux-deb/build-deb.sh [version]
 # Version mặc định "1.0.0" nếu không truyền.

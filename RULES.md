@@ -14,8 +14,8 @@ CTO  (Cấp cao nhất)
 │   ├── Tech Lead
 │   │   ├── Senior Developer
 │   │   ├── Junior Developer
-│   │   ├── Code Migrator          ← CHỈ khi user yêu cầu migrate code (Gemini Pro khi lập plan, Gemini Flash khi code)
-│   │   └── GitHub Repo Researcher ← CHỈ khi user gửi link GitHub yêu cầu nghiên cứu (Gemini Flash)
+│   │   ├── Code Migrator          ← CHỈ khi user yêu cầu migrate code (Opus khi lập plan, Sonnet khi code)
+│   │   └── GitHub Repo Researcher ← CHỈ khi user gửi link GitHub yêu cầu nghiên cứu (Sonnet)
 │   ├── QA Lead
 │   │   ├── QA Engineer
 │   │   └── UX/UI Reviewer         ← gọi khi code vừa sửa/thêm giao diện
@@ -37,7 +37,7 @@ CTO  (Cấp cao nhất)
 | L1 - Executive | CTO | Phê duyệt kiến trúc, ngân sách, chiến lược kỹ thuật |
 | L2 - Management | Engineering Manager, Product Manager | Phân bổ resource, quyết định scope, đánh giá hiệu suất |
 | L3 - Lead | Tech Lead, QA Lead, DevOps Lead, Project Manager | Phân chia task kỹ thuật, code review cuối cùng, mentor |
-| L4 - Senior IC | Senior Developer, Business Analyst, UI/UX Designer, Documentation Writer (chỉ khi user yêu cầu), Code Migrator (Gemini Pro — chỉ khi lập plan migrate, chỉ khi user yêu cầu), GitHub Repo Researcher (Gemini Flash — chỉ khi user gửi link GitHub) | Thiết kế giải pháp, code review, làm task khó |
+| L4 - Senior IC | Senior Developer, Business Analyst, UI/UX Designer, Documentation Writer (chỉ khi user yêu cầu), Code Migrator (Opus — chỉ khi lập plan migrate, chỉ khi user yêu cầu), GitHub Repo Researcher (Sonnet — chỉ khi user gửi link GitHub) | Thiết kế giải pháp, code review, làm task khó |
 | L5 - Junior IC | Junior Developer, QA Engineer, DevOps Engineer, UX/UI Reviewer (gọi khi code vừa đổi/thêm giao diện) | Thực thi task được giao, học hỏi, báo cáo tiến độ |
 
 **Nguyên tắc:** Cấp dưới KHÔNG được phép tự ý quyết định ngoài phạm vi task được giao. Khi gặp vấn đề vượt thẩm quyền, PHẢI escalate lên cấp trên trực tiếp.
@@ -80,7 +80,7 @@ Engineering Manager / CTO (release sign-off)
 
 > **UX/UI Reviewer:** bỏ qua bước này nếu thay đổi chỉ ở backend/logic, không đụng giao diện. Áp dụng tương tự cho luồng Bug fix, Hotfix, Fast-Track, Refactor nếu có đổi UI.
 >
-> **Code Migrator:** KHÔNG nằm trong luồng "Yêu cầu mới" ở trên. Chỉ dùng cho yêu cầu riêng "chuyển đổi framework/ngôn ngữ/UI stack" (xem `GEMINI.md` §4 WF-MIGRATE) — Code Migrator (Gemini Pro) khảo sát + lập plan → user duyệt → Senior/Junior Developer code (Gemini Flash) → Code Migrator review → QA Engineer verify. KHÔNG tự động chạy trong luồng feature/bug thông thường.
+> **Code Migrator:** KHÔNG nằm trong luồng "Yêu cầu mới" ở trên. Chỉ dùng cho yêu cầu riêng "chuyển đổi framework/ngôn ngữ/UI stack" (xem `GEMINI.md` §4 WF-MIGRATE) — Code Migrator (Opus) khảo sát + lập plan → user duyệt → Senior/Junior Developer code (Sonnet) → Code Migrator review → QA Engineer verify. KHÔNG tự động chạy trong luồng feature/bug thông thường.
 >
 > **GitHub Repo Researcher:** KHÔNG nằm trong luồng "Yêu cầu mới" ở trên. Chỉ dùng khi user gửi link GitHub repo và yêu cầu nghiên cứu (xem `GEMINI.md` §4 WF-GITHUB-RESEARCH) — Phase 0 audit → tạo nhánh → clone & phân tích → **viết phân tích repo TRƯỚC** (mục đích/cấu trúc/điểm nổi bật, không kèm đề xuất) → sau đó rẽ theo 2 mục đích: **Mode A (cải tiến KZTEK)** viết bảng đề xuất riêng biệt → user duyệt → áp dụng → user xác nhận merge → merge main; **Mode B (học tập/tham khảo cá nhân)** hỏi user muốn tìm hiểu nguyên lý/cách áp dụng nào → giải thích tương tác đến khi user xác nhận đã nắm rõ → viết tài liệu tổng hợp → merge. KHÔNG tự merge khi chưa có xác nhận rõ ràng của user tại thời điểm merge (áp dụng cho cả 2 Mode).
 
@@ -136,7 +136,7 @@ DevOps Engineer (Deploy thẳng lên môi trường đích)
 - WF-FEATURE / WF-BUGFIX / WF-HOTFIX / WF-FASTTRACK / WF-REFACTOR (khi có UXR): UX/UI Reviewer (đánh giá trực quan) ∥ QA Engineer (test chức năng) — cùng nhận code đã merge, không phụ thuộc lẫn nhau.
 - WF-SPRINT: Business Analyst (AC check) ∥ Tech Lead (pre-estimate) — cùng dùng backlog từ Product Manager.
 
-**Cách thực thi:** Dispatcher gọi nhiều subagent trong CÙNG 1 lời gọi invoke_subagent (không tuần tự từng cái một). Mỗi agent vẫn PHẢI tự tạo đủ artifact riêng theo đúng domain (§11 GEMINI.md) — song song hoá KHÔNG được phép làm giảm chất lượng artifact hay bỏ qua bất kỳ bước kiểm tra nào.
+**Cách thực thi:** Dispatcher gọi nhiều subagent trong CÙNG 1 lời gọi invoke_subagent tool (không tuần tự từng cái một). Mỗi agent vẫn PHẢI tự tạo đủ artifact riêng theo đúng domain (§11 GEMINI.md) — song song hoá KHÔNG được phép làm giảm chất lượng artifact hay bỏ qua bất kỳ bước kiểm tra nào.
 
 **TUYỆT ĐỐI KHÔNG song song hoá:**
 - Bất kỳ cặp bước nào một bên review/approve output của bên kia (VD: Senior Dev code → Tech Lead review PHẢI tuần tự).

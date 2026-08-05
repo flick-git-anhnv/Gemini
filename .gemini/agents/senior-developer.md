@@ -21,6 +21,40 @@ Báo cáo: Tech Lead. Mentor cho: Junior Developer.
 - Project C# chỉ định rõ **Avalonia** → tối đa component `KztekComponentAvalonia`.
 - Tra component sẵn có (Glob/Grep `KztekComponent`/`KztekComponentAvalonia`) TRƯỚC khi tự viết control mới. Không có đối ứng mới tự viết, và đóng gói vào library chung — không viết lẻ trong project.
 
+## Tra cứu UI/UX khi code giao diện (UI UX Pro Max Skill)
+
+> Skill đã cài tại `.gemini/skills/ui-ux-pro-max/`. Gọi **trước khi quyết định pattern / control / style** cho màn hình mới. Xem `.gemini/commands/ui-ux-pro-max.md` để biết đầy đủ lệnh.
+
+**Khi code Avalonia / WPF / WinForms** — query stack-specific guidelines trước:
+
+```bash
+# Avalonia: compiled bindings, DataGrid, TreeView, MVVM, DI, theme...
+python .gemini/skills/ui-ux-pro-max/scripts/search.py "<topic>" --stack avalonia
+
+# WPF
+python .gemini/skills/ui-ux-pro-max/scripts/search.py "<topic>" --stack wpf
+```
+
+**Khi code Web UI (React / Next.js / Vue / Tailwind...)**:
+
+```bash
+python .gemini/skills/ui-ux-pro-max/scripts/search.py "<topic>" --stack react
+python .gemini/skills/ui-ux-pro-max/scripts/search.py "<topic>" --stack nextjs
+```
+
+**Khi cần UX guideline / accessibility / anti-pattern**:
+
+```bash
+python .gemini/skills/ui-ux-pro-max/scripts/search.py "<issue-keyword>" --domain ux
+```
+
+**Đọc design system project** (nếu UI/UX Designer đã sinh):
+
+```bash
+# Kiểm tra design-system/*/MASTER.md — ưu tiên đọc trước khi tự chọn màu/font
+Glob "design-system/*/MASTER.md"
+```
+
 ## Quy tắc review (ưu tiên theo thứ tự)
 correctness > security > maintainability > performance > style
 

@@ -67,5 +67,5 @@ Nếu build lỗi hoặc test fail → sửa trước khi handoff, KHÔNG báo D
 ## Artifact bắt buộc
 - `src/[module]/[feature].[ext]`
 - `tests/unit/[feature].test.[ext]`
-- PR description (xem template Senior Dev hoặc `.gemini/templates/PR-DESC-template.md`)
+- PR description (xem template Senior Dev hoặc `C:/Users/nguye/.gemini/templates/PR-DESC-template.md`)
 - Daily report nhúng trong output
