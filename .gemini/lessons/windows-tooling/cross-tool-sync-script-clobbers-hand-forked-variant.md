@@ -57,6 +57,24 @@ coi nó cùng nhóm với `README.md` (nội dung bespoke riêng từng bên, kh
    thừa cần xoá", có thể là "file đã hand-fork, sync tool không biết map nó với
    gì ở nguồn".
 
+## Lần gặp lại (2026-08-06)
+
+Ngay sau khi loại `windows-tools/` và commit, chạy `sync-to-gemini.py --apply` lần
+tiếp theo (đồng bộ đợt merge Agent Dashboard) **vẫn ghi đè mất** bản fix đúng của
+`.gemini/templates/settings-global.json` (schema Antigravity thật, commit `15bac7f`)
+bằng bản gốc `.gemini/templates/settings-global.json` (schema Gemini Agent
+`permissions.allow`/`hooks.PreToolUse`) — vì file này KHÔNG phải `.md` nên bị copy
+verbatim, không qua transform, và không nằm trong danh sách loại trừ ban đầu (chỉ
+mới loại `windows-tools/`, quên rằng `templates/settings-global.json` cũng đã
+hand-fork tương tự). Fix: thêm `"settings-global.json"` vào `EXCLUDE_FILE_NAMES`.
+
+→ **Bài học tổng quát:** loại trừ 1 file/thư mục hand-fork không đủ — phải rà lại
+TOÀN BỘ các file non-`.md` trong phạm vi sync (không chỉ nơi vừa phát hiện lỗi) để
+tìm các cặp đã hand-fork tương tự, vì chúng có xu hướng xuất hiện thành cụm (mọi
+file "hướng dẫn/cấu hình cho người dùng cuối" — README, settings mẫu, GUI tool —
+đều có khả năng bị viết lại riêng cho từng bên, khác với agents/lessons/code
+thường mirror 1:1 được).
+
 ## Áp dụng lại (How to reuse)
 
 - Khi viết bất kỳ script đồng bộ nào giữa 2 hệ thống (Gemini ↔ Gemini, hay
@@ -73,9 +91,25 @@ coi nó cùng nhóm với `README.md` (nội dung bespoke riêng từng bên, kh
 - ⚠️ Verbatim-copy an toàn cho nội dung tool-agnostic (lessons, code snippet,
   data script) nhưng KHÔNG an toàn cho bất kỳ file có khả năng đã được
   rebrand/hand-tune riêng theo từng tool đích.
+- ⚠️ **Mở rộng từ phiên làm việc thực tế:** cơ chế cấu hình permission thật của
+  Antigravity/Gemini KHÔNG nằm ở `settings.json` (VS Code style) hay
+  `~/.gemini/settings.json` — mà ở `~/.gemini/config/config.json` →
+  `userSettings.globalPermissionGrants.allow`, dạng mảng string phẳng
+  (`command(<text>)`, `write_file(<path>)`, `read_file(<path>)`), KHÔNG phải
+  object `{match, pattern}` như 1 số blog/docs bên thứ 3 mô tả. App tự động
+  loại bỏ (không lỗi, chỉ im lặng bỏ qua) mọi field không đúng schema khi
+  regenerate file — dấu hiệu nhận biết: field mình thêm "biến mất" sau khi
+  app restart mà không có thông báo lỗi nào. Ngoài ra: dấu `*` cuối 1 pattern
+  trong `allow` list **không đảm bảo hoạt động như wildcard/prefix-match** —
+  nhiều lệnh biến thể (`node -c...`, `node -e...`, `node script.js`,
+  `powershell -Command "..."`) vẫn bị hỏi lại dù đã có `node*` trong allow list.
+  Cách chắc chắn duy nhất đã xác nhận: bấm "Yes, and always allow '<câu lệnh
+  chính xác>' in this project" ngay trên dialog — lưu literal string, exact
+  match, không phụ thuộc wildcard.
 
 ## Tham chiếu
 
 - Project liên quan: `scripts/sync-to-gemini.py` (Gemini-Git ↔ GeminiGit)
 - File minh chứng: `scripts/windows-tools/ClaudeConfigAudit.ps1` vs
   `scripts/windows-tools/GeminiConfigAudit.ps1`
+- File cấu hình permission thật của Antigravity: `~/.gemini/config/config.json`
