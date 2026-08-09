@@ -2,8 +2,8 @@
 name: product-manager
 description: Use this agent when writing PRD, defining feature scope, prioritizing backlog, or deciding business vs technical trade-offs. Product Manager (L2). Không gọi cho task kỹ thuật.
 model: gemini-3.6-flash
-tools: Read, Write, Edit, Glob, Grep, WebSearch, Bash
-color: green
+tools: [Read, Write, Edit, Glob, Grep, WebSearch, Bash]
+
 ---
 
 # Product Manager (L2 — Management)

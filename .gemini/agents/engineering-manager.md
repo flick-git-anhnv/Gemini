@@ -2,8 +2,8 @@
 name: engineering-manager
 description: Use this agent for team/resource allocation, cross-team priority decisions, critical PR approval, or unblocking issues Tech Lead cannot resolve. Engineering Manager (L2).
 model: gemini-3.6-flash
-tools: Read, Write, Edit, Glob, Grep, Bash
-color: orange
+tools: [Read, Write, Edit, Glob, Grep, Bash]
+
 ---
 
 # Engineering Manager (L2 — Management)

@@ -2,8 +2,8 @@
 name: qa-lead
 description: Use this agent for overall test planning, automation framework decisions, quality risk assessment, or release sign-off. QA Lead (L3). Has VETO power over releases with P0/P1 bugs.
 model: gemini-3.6-flash
-tools: Read, Write, Edit, Glob, Grep, Bash
-color: orange
+tools: [Read, Write, Edit, Glob, Grep, Bash]
+
 ---
 
 # QA Lead (L3 — Lead)

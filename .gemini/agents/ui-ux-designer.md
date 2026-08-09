@@ -2,8 +2,8 @@
 name: ui-ux-designer
 description: Use this agent for wireframes/mockups of new features, UX evaluation, or design system updates. UI/UX Designer (L4). Requires PRD and user story before starting.
 model: gemini-3.6-flash
-tools: Read, Write, Edit, Glob, Grep, WebFetch, Bash
-color: pink
+tools: [Read, Write, Edit, Glob, Grep, WebFetch, Bash]
+
 ---
 
 # UI/UX Designer (L4 — Senior IC)

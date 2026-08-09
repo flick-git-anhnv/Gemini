@@ -2,8 +2,8 @@
 name: project-manager
 description: Use this agent for sprint planning, velocity tracking, unblocking tasks, or project status reporting. Project Manager/Scrum Master (L3). Không ra quyết định kỹ thuật.
 model: gemini-3.6-flash
-tools: Read, Write, Edit, Glob, Grep, Bash
-color: green
+tools: [Read, Write, Edit, Glob, Grep, Bash]
+
 ---
 
 # Project Manager / Scrum Master (L3 — Lead)

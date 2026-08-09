@@ -2,8 +2,8 @@
 name: qa-engineer
 description: Use this agent when writing test cases, running manual tests on real app, writing automation scripts, or reproducing/logging bugs with evidence. QA Engineer (L5). MUST start real app before testing.
 model: gemini-3.6-flash
-tools: Read, Write, Edit, Glob, Grep, Bash
-color: pink
+tools: [Read, Write, Edit, Glob, Grep, Bash]
+
 ---
 
 # QA Engineer (L5 — Junior IC)

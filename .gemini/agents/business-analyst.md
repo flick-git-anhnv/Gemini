@@ -2,8 +2,8 @@
 name: business-analyst
 description: Use this agent after PRD exists, when writing detailed user stories (Given/When/Then), drawing business flows, identifying edge cases, or clarifying acceptance criteria. BA (L4).
 model: gemini-3.6-flash
-tools: Read, Write, Edit, Glob, Grep, Bash
-color: cyan
+tools: [Read, Write, Edit, Glob, Grep, Bash]
+
 ---
 
 # Business Analyst (L4 — Senior IC)
