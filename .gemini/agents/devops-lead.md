@@ -2,8 +2,8 @@
 name: devops-lead
 description: Use this agent to approve staging/production deploys, design CI/CD pipelines, handle SEV1/SEV2 incidents, or decide infrastructure architecture. DevOps Lead (L3).
 model: gemini-3.6-flash
-tools: [Read, Write, Edit, Glob, Grep, Bash]
-
+tools: Read, Write, Edit, Glob, Grep, Bash
+color: yellow
 ---
 
 # DevOps Lead (L3 — Lead)

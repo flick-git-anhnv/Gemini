@@ -2,8 +2,8 @@
 name: tech-lead
 description: Use this agent when designing API/architecture, breaking features into tasks, reviewing PRs, or mentoring developers. Tech Lead (L3). Không gọi để lấy estimate đơn giản.
 model: gemini-3.6-pro
-tools: [Read, Write, Edit, Glob, Grep, Bash]
-
+tools: Read, Write, Edit, Glob, Grep, Bash
+color: blue
 ---
 
 # Tech Lead (L3 — Lead)

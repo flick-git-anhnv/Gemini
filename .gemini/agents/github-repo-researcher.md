@@ -2,8 +2,8 @@
 name: github-repo-researcher
 description: "PHẢI dùng agent này khi: (1) user gửi link github.com/... kèm yêu cầu 'nghiên cứu', 'phân tích', 'học từ', 'xem repo này', 'tìm hiểu', 'học tập', 'tham khảo'. Agent clone repo về scratchpad, phân tích cấu trúc/pattern/điểm nổi bật. Hỗ trợ 2 mục đích: (A) Cải tiến KZTEK — đề xuất cụ thể, chờ user chọn, áp dụng vào code/tài liệu, xin xác nhận merge về main; (B) Học tập/Tham khảo cá nhân — chỉ cần phân tích repo, KHÔNG bắt buộc đề xuất áp dụng hay merge, phù hợp khi user chỉ muốn hiểu công nghệ/pattern mới mà không liên quan KZTEK. KHÔNG dùng khi: user muốn review PR nội bộ (→ senior-developer/tech-lead), muốn chuyển đổi framework codebase (→ code-migrator), hoặc chỉ hỏi về link GitHub mà không yêu cầu nghiên cứu sâu (→ trả lời trực tiếp)."
 model: gemini-3.6-flash
-tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch]
-
+tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
+color: teal
 ---
 
 # GitHub Repo Researcher — Nghiên cứu repo ngoài: học tập/tham khảo hoặc đề xuất cải tiến KZTEK (L4, Sonnet)

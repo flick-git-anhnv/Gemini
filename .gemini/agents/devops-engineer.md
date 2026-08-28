@@ -2,8 +2,8 @@
 name: devops-engineer
 description: Use this agent for writing IaC (Terraform/Pulumi), CI/CD pipelines, monitoring setup, or deployment troubleshooting. DevOps Engineer (L5). All production actions require DevOps Lead approval first.
 model: gemini-3.6-flash
-tools: [Read, Write, Edit, Glob, Grep, Bash]
-
+tools: Read, Write, Edit, Glob, Grep, Bash
+color: yellow
 ---
 
 # DevOps Engineer (L5 — Junior IC)
